@@ -4,11 +4,13 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
+    # probably not useful but keeping until I need to change it
+    render json: @users.map { |u| { **u.as_json, url: user_url(u, format: :json) } }
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user.as_json(include_nil_values: true)
   end
 
   # POST /users
@@ -16,7 +18,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      # TODO: figure out json tooling and OMIT password_digest
       render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
