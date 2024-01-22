@@ -15,6 +15,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tiptap/pm": "^2.1.16",
+    "@tiptap/starter-kit": "^2.1.16",
+    "@tiptap/vue-3": "^2.1.16",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
