@@ -1,0 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
+# Make params on multi lines
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation

@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  # This was causing it not to save to the DB
-  # attr_accessor :password_digest
+  def hash_no_pw
+    attributes.reject { |key, _| key == 'password_digest' }
+  end
 end
