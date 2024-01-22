@@ -12,7 +12,4 @@ class User < ApplicationRecord
   # validates :last_name, length: { minimum: 2 }, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
 
   has_secure_password
-
-  # This was causing it not to save to the DB
-  # attr_accessor :password_digest
 end
