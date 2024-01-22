@@ -12,8 +12,4 @@ class User < ApplicationRecord
   # validates :last_name, length: { minimum: 2 }, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
 
   has_secure_password
-
-  def hash_no_pw
-    attributes.reject { |key, _| key == 'password_digest' }
-  end
 end
