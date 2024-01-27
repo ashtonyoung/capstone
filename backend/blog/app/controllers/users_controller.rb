@@ -52,7 +52,6 @@ class UsersController < ApplicationController
         handle
         email
         password
-        password_confirmation
         first_name
         last_name
       ]
