@@ -22,7 +22,8 @@ const sessionExists = ref(false)
 }
 
 body {
-  font-family: 'Roboto Slab', serif;
+  //font-family: 'Roboto Slab', serif;
+  font-family: 'Inter', serif;
 }
 
 /* UTILITY CLASSES */
