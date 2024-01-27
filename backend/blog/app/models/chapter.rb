@@ -4,8 +4,7 @@ class Chapter < ApplicationRecord
   has_one :event, dependent: :destroy
   belongs_to :user
 
-  validates :title, presence: true
+  validates :name, presence: true
   validates :user_id, presence: true
-  validates :user_id, uniqueness: true
 
 end
