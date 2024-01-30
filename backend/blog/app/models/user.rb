@@ -1,6 +1,9 @@
 class User < ApplicationRecord
+  # CALLBACKS
+  before_save :format_data
+
   # RELATIONS
-  has_many :chapters
+  has_many :chapters, dependent: :destroy
 
   # VALIDATIONS
   validates :handle, uniqueness: true, presence: true
@@ -12,4 +15,9 @@ class User < ApplicationRecord
   # validates :last_name, length: { minimum: 2 }, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }
 
   has_secure_password
+
+  def format_data
+    handle.downcase!
+    email.downcase!
+  end
 end
