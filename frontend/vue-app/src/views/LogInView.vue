@@ -9,7 +9,6 @@ const form = reactive({
     email: '',
     handle: '',
     password: '',
-    password_confirmation: '',
   },
 })
 
@@ -72,11 +71,6 @@ async function handleSignUp() {
           <ev-input-field
             v-model="form.user.password"
             label="Password"
-            type="password"
-          />
-          <ev-input-field
-            v-model="form.user.password_confirmation"
-            label="Confirm Password"
             type="password"
           />
         </form>
