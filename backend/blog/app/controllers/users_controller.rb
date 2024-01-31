@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     # probably not useful but keeping until I need to change it
-    render json: @users.map { |u| { **u.as_json, url: user_url(u, format: :json) } }
+    render json: @users.map { |u| {**u.as_json, url: user_url(u, format: :json)} }
   end
 
   # GET /users/1
