@@ -12,6 +12,9 @@ gem "sqlite3", "~> 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+# Authentication
+gem 'jwt', '~> 1.5', '>= 1.5.4'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 # Jb should be a fine alternative
@@ -32,7 +35,6 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem 'rubocop', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -55,5 +57,7 @@ group :development do
 
   # For gentler rubocop rules
   gem "rubocop-rails-omakase", require: false
+  gem "standard"
+  # gem 'rubocop', require: false
 end
 
