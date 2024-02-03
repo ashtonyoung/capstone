@@ -95,7 +95,6 @@ GEM
       rdoc
       reline (>= 0.3.8)
     json (2.7.1)
-    jwt (1.5.6)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
     loofah (2.22.0)
@@ -235,7 +234,6 @@ DEPENDENCIES
   debug
   factory_bot_rails
   faker
-  jwt (~> 1.5, >= 1.5.4)
   puma (~> 5.0)
   rails (~> 7.0.8)
   rubocop-rails-omakase
