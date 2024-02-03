@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:current_user_id] = @user.id
+      @_current_user = @user
       render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -36,6 +38,15 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
+  end
+
+  def test_current_user
+    current_user = User.find_by(id: session[:current_user_id])
+    if current_user.present?
+      render json: current_user
+    else
+      render json: {info: "User not logged in"}, status: :see_other
+    end
   end
 
   private
