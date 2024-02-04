@@ -1,7 +1,7 @@
 # Application Controller for my blog app @rubocop
 class ApplicationController < ActionController::API
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_user!, if: :public_api
 
   private
 
@@ -16,6 +16,12 @@ class ApplicationController < ActionController::API
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
     current_user.present?
+  end
+
+  def public_api
+    (controller_name == "sessions" && action_name == "create") ||
+      (controller_name == "sessions" && action_name == "index") ||
+      (controller_name == "users" && action_name == "create")
   end
 
   # Method to use in a before_action to require that a user is

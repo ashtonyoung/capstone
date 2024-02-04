@@ -47,7 +47,7 @@ function handleClose() {
     </div>
     <div id="modal-footer-container">
       <slot name="footer">
-        <button @click="handleCancel">{{ cancelText }}}</button>
+        <button @click="handleCancel">{{ cancelText }}</button>
         <button @click="handleConfirm">{{ confirmText }}</button>
       </slot>
     </div>
