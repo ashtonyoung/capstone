@@ -4,5 +4,4 @@ class Event < ApplicationRecord
   validates :name, presence: true
   validates :chapter_id, presence: true
   validates :chapter_id, uniqueness: true
-
 end

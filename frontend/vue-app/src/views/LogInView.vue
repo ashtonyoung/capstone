@@ -1,10 +1,11 @@
 <script setup>
 import EvModal from '@/components/generic/EvModal.vue'
 import EvInputField from '@/components/generic/EvInputField.vue'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const showModal = ref(false)
-const form = reactive({
+const signUpForm = ref({
   user: {
     email: '',
     handle: '',
@@ -13,44 +14,77 @@ const form = reactive({
 })
 
 async function handleSignUp() {
-  const response = await fetch('/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(form),
-  })
-  const data = await response.json()
-  console.log('response data:', data)
+  try {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signUpForm.value),
+    })
+    const data = await response.json()
+    console.log('response data:', data)
+  } catch (e) {
+    console.log('Unexpected server error:', e)
+  }
+}
+
+const router = useRouter()
+function redirectToHome() {
+  router.push('/')
+}
+
+const logInForm = ref({
+  user: {
+    email: '',
+    password: '',
+  },
+})
+async function handleLogIn(e) {
+  e.preventDefault()
+  e.stopPropagation()
+  try {
+    const response = await fetch('/api/sessions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logInForm.value),
+    })
+    if (response.ok) {
+      redirectToHome()
+    } else {
+      console.log('response data:', await response.json())
+    }
+  } catch (e) {
+    console.log('Unexpected server error:', e)
+  }
 }
 </script>
 
 <template>
+  <h1>Eventful</h1>
   <div>
-    <h1>Log in</h1>
+    <h2>Log in</h2>
     <form method="get">
-      <label for="email">Email</label>
-      <!-- TODO Refactor with Ev Components -->
-      <input
-        type="text"
-        id="email"
-        name="email"
+      <ev-input-field
+        v-model="logInForm.user.email"
+        label="Email"
       />
-      <label for="password">Password</label>
-      <input
+      <ev-input-field
+        v-model="logInForm.user.password"
+        label="Password"
         type="password"
-        id="password"
-        name="password"
       />
       <input
         type="submit"
         value="Log in"
+        @click="handleLogIn"
       />
     </form>
     <button @click="showModal = true">Sign Up</button>
   </div>
   <div>
-    <!--    <SignUp />-->
     <ev-modal
       v-if="showModal"
       v-model:show="showModal"
@@ -61,15 +95,15 @@ async function handleSignUp() {
       <template #body>
         <form>
           <ev-input-field
-            v-model="form.user.email"
+            v-model="signUpForm.user.email"
             label="Email"
           />
           <ev-input-field
-            v-model="form.user.handle"
+            v-model="signUpForm.user.handle"
             label="Handle"
           />
           <ev-input-field
-            v-model="form.user.password"
+            v-model="signUpForm.user.password"
             label="Password"
             type="password"
           />
