@@ -13,6 +13,13 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       meta: { public: true },
+      beforeEnter: async (to, from, next) => {
+        if (await checkAuthentication()) {
+          next('/')
+          return
+        }
+        next()
+      },
       component: () => import('@/views/LogInView.vue'),
     },
     {
@@ -30,7 +37,7 @@ const router = createRouter({
       name: 'logout',
       beforeEnter: async (to, from, next) => {
         await logout()
-        next('/login') // Redirect to the login page after logout
+        next('/login')
       },
     },
     {
