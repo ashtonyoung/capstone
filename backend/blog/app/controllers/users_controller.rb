@@ -40,15 +40,6 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
-  def test_current_user
-    current_user = User.find_by(id: session[:current_user_id])
-    if current_user.present?
-      render json: current_user
-    else
-      render json: {info: "User not logged in"}, status: :see_other
-    end
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
