@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     # probably not useful but keeping until I need to change it
-    render json: @users.map { |u| { **u.as_json, url: user_url(u, format: :json) } }
+    render json: @users.map { |u| {**u.as_json, url: user_url(u, format: :json)} }
   end
 
   # GET /users/1
@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:current_user_id] = @user.id
+      @_current_user = @user
       render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
