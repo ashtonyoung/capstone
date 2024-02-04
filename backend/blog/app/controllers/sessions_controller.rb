@@ -20,10 +20,17 @@ class SessionsController < ApplicationController
     @_current_user = nil
   end
 
+  def index
+    if logged_in?
+      render json: {logged_in: true, user: current_user}, status: :ok
+    else
+      render json: {logged_in: false}, status: :unauthorized
+    end
+  end
+
   private
 
   def session_params
-    # params.require(:session).permit(user: [:email, :password])
     params.require(:user).permit(:email, :password)
   end
 end

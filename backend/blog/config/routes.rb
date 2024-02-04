@@ -5,6 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :users
-  resources :sessions, only: %i[create destroy]
-  get "/current-user", to: "users#test_current_user"
+  resources :sessions, only: %i[create destroy index]
 end
