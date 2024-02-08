@@ -3,8 +3,13 @@ import EvModal from '@/components/generic/EvModal.vue'
 import EvInputField from '@/components/generic/EvInputField.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import EvBtn from '@/components/generic/EvBtn.vue'
 
 const showModal = ref(false)
+function handleClose() {
+  showModal.value = false
+}
+
 const signUpForm = ref({
   user: {
     email: '',
@@ -76,39 +81,41 @@ async function handleLogIn(e) {
         label="Password"
         type="password"
       />
-      <input
+      <ev-btn
         type="submit"
-        value="Log in"
         @click="handleLogIn"
-      />
+        >Log in</ev-btn
+      >
     </form>
-    <button @click="showModal = true">Sign Up</button>
+    <ev-btn @click="showModal = true">Sign up</ev-btn>
   </div>
   <div>
-    <ev-modal
-      v-if="showModal"
-      v-model:show="showModal"
-      confirm-text="Sign up"
-      @confirm="handleSignUp"
-    >
-      <template #title>Sign Up</template>
-      <template #body>
-        <form>
-          <ev-input-field
-            v-model="signUpForm.user.email"
-            label="Email"
-          />
-          <ev-input-field
-            v-model="signUpForm.user.handle"
-            label="Handle"
-          />
-          <ev-input-field
-            v-model="signUpForm.user.password"
-            label="Password"
-            type="password"
-          />
-        </form>
-      </template>
-    </ev-modal>
+    <Transition>
+      <ev-modal
+        v-model:show="showModal"
+        confirm-text="Sign up"
+        @confirm="handleSignUp"
+        @close="handleClose"
+      >
+        <template #title>Sign up</template>
+        <template #body>
+          <form>
+            <ev-input-field
+              v-model="signUpForm.user.email"
+              label="Email"
+            />
+            <ev-input-field
+              v-model="signUpForm.user.handle"
+              label="Handle"
+            />
+            <ev-input-field
+              v-model="signUpForm.user.password"
+              label="Password"
+              type="password"
+            />
+          </form>
+        </template>
+      </ev-modal>
+    </Transition>
   </div>
 </template>

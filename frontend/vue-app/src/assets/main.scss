@@ -1,0 +1,140 @@
+@import 'base.css';
+@import 'base.scss';
+@import './transitions.css';
+
+/*#app {*/
+/*  max-width: 1280px;*/
+/*  margin: 0 auto;*/
+/*  padding: 2rem;*/
+/*  font-weight: normal;*/
+/*}*/
+
+/*a,*/
+/*.green {*/
+/*  text-decoration: none;*/
+/*  color: hsla(160, 100%, 37%, 1);*/
+/*  transition: 0.4s;*/
+/*  padding: 3px;*/
+/*}*/
+
+/*@media (hover: hover) {*/
+/*  a:hover {*/
+/*    background-color: hsla(160, 100%, 37%, 0.2);*/
+/*  }*/
+/*}*/
+
+/*@media (min-width: 1024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
+
+/*  #app {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*    padding: 0 2rem;*/
+/*  }*/
+/*}*/
+
+/* MY RULES*/
+
+/* Reset styles */
+body,
+h1,
+h2,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd,
+dt {
+  margin: 0;
+  padding: 0;
+}
+
+/*Globally use border-box for sizing*/
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* Body styles */
+body {
+  /*font-family: 'Roboto Slab', serif;*/
+  font-family: 'Inter', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $dark;
+  background-color: #fff;
+  margin: 0 1rem;
+}
+
+/* Typography styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Link styles */
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Cursor styles */
+button,
+a,
+input[type='submit'] {
+  cursor: pointer;
+}
+
+button {
+  border-radius: $br-xs;
+  border: none;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+/* Selection styles */
+/*::selection {*/
+/*  background-color: #007bff;*/
+/*  color: #fff;*/
+/*}*/
+
+/* UTILITY CLASSES */
+
+.flex {
+  display: flex;
+}
+
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* DESKTOP CSS */
+@media (min-width: 768px) {
+  body {
+    margin: 0 4rem;
+  }
+}

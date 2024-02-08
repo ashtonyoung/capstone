@@ -20,7 +20,7 @@ const model = defineModel()
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <label :for="label">{{ label }}</label>
     <input
       :type="type"
@@ -33,8 +33,26 @@ const model = defineModel()
 </template>
 
 <style scoped>
+@import '@/assets/base.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  color: $primary;
+}
+
+input {
+  padding: 0.5rem;
+  font-size: 16px;
+  border: 1px solid $gray;
+  border-radius: $br;
+}
+
 input:focus {
-  border: yellow 8px solid;
-  background-color: var(--primary);
+  border: 1px solid $secondary;
 }
 </style>

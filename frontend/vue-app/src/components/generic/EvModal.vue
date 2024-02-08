@@ -1,6 +1,7 @@
 <script setup>
-import { defineModel, defineProps, defineEmits } from 'vue'
-const emit = defineEmits(['confirm'])
+import { defineModel, defineProps, defineEmits, ref, watch } from 'vue'
+import EvBtn from '@/components/generic/EvBtn.vue'
+const emit = defineEmits(['confirm', 'close'])
 defineProps({
   confirmText: {
     type: String,
@@ -14,6 +15,18 @@ defineProps({
   },
 })
 const show = defineModel('show', { required: true })
+const dialog = ref(null)
+
+watch(show, async (newValue) => {
+  // first check guards against before component mounts
+  if (newValue !== null) {
+    if (newValue === true) {
+      dialog.value.showModal()
+    } else if (newValue === false) {
+      dialog.value.close()
+    }
+  }
+})
 
 function handleConfirm(event) {
   event.preventDefault()
@@ -22,48 +35,79 @@ function handleConfirm(event) {
 }
 
 function handleCancel() {
-  show.value = false
+  emit('close')
 }
 
 function handleClose() {
-  show.value = false
+  emit('close')
 }
 </script>
 
 <template>
-  <div>
-    <div
-      class="flex"
-      id="modal-title-container"
-    >
-      <h3>
-        <slot name="title"></slot>
-      </h3>
-      <button @click="handleClose"><i>x</i></button>
-    </div>
+  <dialog ref="dialog">
+    <form method="dialog">
+      <div
+        class="flex"
+        id="modal-title-container"
+      >
+        <h3>
+          <slot name="title"></slot>
+        </h3>
+        <ev-btn @click="handleClose">X</ev-btn>
+      </div>
 
-    <div id="modal-content-container">
-      <slot name="body"></slot>
-    </div>
-    <div id="modal-footer-container">
-      <slot name="footer">
-        <button @click="handleCancel">{{ cancelText }}</button>
-        <button @click="handleConfirm">{{ confirmText }}</button>
-      </slot>
-    </div>
-  </div>
+      <div id="modal-content-container">
+        <slot name="body"></slot>
+      </div>
+      <div id="modal-footer-container">
+        <slot name="footer">
+          <ev-btn @click="handleCancel">{{ cancelText }}</ev-btn>
+          <ev-btn @click="handleConfirm">{{ confirmText }}</ev-btn>
+        </slot>
+      </div>
+    </form>
+  </dialog>
 </template>
 
-<style scoped>
-#modal-title-container {
-  padding: 1rem;
+<style scoped lang="scss">
+@import '@/assets/base.scss';
+dialog {
+  border-radius: $br;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 0;
+  width: 66.66%;
+  height: 66.66%;
+  max-width: 40rem;
+  max-height: 30rem;
 }
 
-/* TODO remember how to do flexbox lol */
-/* .flex > h3 {
-  align-self: start;
+#modal-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background-color: $primary;
+
+  h3 {
+    font-weight: 800;
+    margin: 0;
+    color: $white;
+    font-size: $fs-title;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: $white;
+    font-weight: 800;
+    font-size: 1rem;
+  }
 }
-.flex > button {
-  align-self: end;
-} */
+
+#modal-content-container {
+  padding: 1.5rem;
+}
 </style>

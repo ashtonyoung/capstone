@@ -12,7 +12,7 @@ module Blog
     config.load_defaults 7.0
 
     # This also configures session_options for use below
-    config.session_store :cookie_store, key: "eventful_user_session"
+    config.session_store :cookie_store, key: "eventful_user_session", secret: Rails.application.credentials.secret_key_base
 
     # Required for all session management (regardless of session_store)
     config.middleware.use ActionDispatch::Cookies
