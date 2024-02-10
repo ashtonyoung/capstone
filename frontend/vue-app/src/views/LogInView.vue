@@ -1,10 +1,18 @@
 <script setup>
-import EvModal from '@/components/generic/EvModal.vue'
-import EvInputField from '@/components/generic/EvInputField.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const showModal = ref(false)
+function handleShowModal(e) {
+  e.preventDefault()
+  e.stopPropagation()
+  showModal.value = true
+}
+
+function handleClose() {
+  showModal.value = false
+}
+
 const signUpForm = ref({
   user: {
     email: '',
@@ -63,52 +71,63 @@ async function handleLogIn(e) {
 </script>
 
 <template>
-  <h1>Eventful</h1>
-  <div>
-    <h2>Log in</h2>
-    <form method="get">
-      <ev-input-field
-        v-model="logInForm.user.email"
-        label="Email"
-      />
-      <ev-input-field
-        v-model="logInForm.user.password"
-        label="Password"
-        type="password"
-      />
-      <input
-        type="submit"
-        value="Log in"
-        @click="handleLogIn"
-      />
-    </form>
-    <button @click="showModal = true">Sign Up</button>
+  <div class="h-svh items-center justify-around sm:flex">
+    <div>
+      <h1 class="text font-serif text-4xl">Eventful</h1>
+      <p>Capture the essence of now</p>
+    </div>
+    <div class="rounded bg-base-100 p-4 shadow-md sm:w-1/3">
+      <form method="get">
+        <ev-input-field
+          v-model="logInForm.user.email"
+          id="login-email"
+          placeholder="Email"
+        />
+        <ev-input-field
+          v-model="logInForm.user.password"
+          id="login-password"
+          type="password"
+          placeholder="Password"
+        />
+        <div class="flex flex-col">
+          <ev-btn
+            class="mb-2"
+            @click="handleLogIn"
+          >
+            Log In</ev-btn
+          >
+          <ev-btn @click="handleShowModal">Sign up</ev-btn>
+        </div>
+      </form>
+    </div>
   </div>
   <div>
     <ev-modal
-      v-if="showModal"
       v-model:show="showModal"
       confirm-text="Sign up"
       @confirm="handleSignUp"
+      @close="handleClose"
     >
-      <template #title>Sign Up</template>
+      <template #title>
+        <h3 class="font-serif text-2xl">Sign up</h3>
+      </template>
       <template #body>
-        <form>
-          <ev-input-field
-            v-model="signUpForm.user.email"
-            label="Email"
-          />
-          <ev-input-field
-            v-model="signUpForm.user.handle"
-            label="Handle"
-          />
-          <ev-input-field
-            v-model="signUpForm.user.password"
-            label="Password"
-            type="password"
-          />
-        </form>
+        <ev-input-field
+          v-model="signUpForm.user.email"
+          label="Email"
+        />
+        <ev-input-field
+          v-model="signUpForm.user.handle"
+          label="Handle"
+        />
+        <ev-input-field
+          v-model="signUpForm.user.password"
+          label="Password"
+          type="password"
+        />
       </template>
     </ev-modal>
   </div>
 </template>
+
+<style></style>
