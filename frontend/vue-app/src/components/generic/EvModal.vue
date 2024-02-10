@@ -1,6 +1,7 @@
 <script setup>
-import { defineModel, defineProps, defineEmits } from 'vue'
-const emit = defineEmits(['confirm'])
+import { defineModel, defineProps, defineEmits, ref, watch } from 'vue'
+import EvBtn from '@/components/generic/EvBtn.vue'
+const emit = defineEmits(['confirm', 'close'])
 defineProps({
   confirmText: {
     type: String,
@@ -14,56 +15,50 @@ defineProps({
   },
 })
 const show = defineModel('show', { required: true })
-
+const dialog = ref(null)
+watch(show, async (newValue) => {
+  // first check guards against before component mounts
+  if (newValue !== null) {
+    if (newValue === true) {
+      dialog.value.showModal()
+    } else if (newValue === false) {
+      dialog.value.close()
+    }
+  }
+})
 function handleConfirm(event) {
   event.preventDefault()
   event.stopPropagation()
   emit('confirm')
 }
-
 function handleCancel() {
-  show.value = false
-}
-
-function handleClose() {
-  show.value = false
+  emit('close')
 }
 </script>
 
 <template>
-  <div>
-    <div
-      class="flex"
-      id="modal-title-container"
-    >
-      <h3>
+  <dialog
+    class="rounded p-4 text-base-content sm:w-1/2 lg:w-1/3"
+    ref="dialog"
+  >
+    <form method="dialog">
+      <header class="mb-2 flex content-between text-xl">
         <slot name="title"></slot>
-      </h3>
-      <button @click="handleClose"><i>x</i></button>
-    </div>
+      </header>
 
-    <div id="modal-content-container">
-      <slot name="body"></slot>
-    </div>
-    <div id="modal-footer-container">
+      <section>
+        <slot name="body"></slot>
+      </section>
       <slot name="footer">
-        <button @click="handleCancel">{{ cancelText }}</button>
-        <button @click="handleConfirm">{{ confirmText }}</button>
+        <footer class="flex flex-row justify-end">
+          <ev-btn
+            class="mr-1"
+            @click="handleCancel"
+            >{{ cancelText }}</ev-btn
+          >
+          <ev-btn @click="handleConfirm">{{ confirmText }}</ev-btn>
+        </footer>
       </slot>
-    </div>
-  </div>
+    </form>
+  </dialog>
 </template>
-
-<style scoped>
-#modal-title-container {
-  padding: 1rem;
-}
-
-/* TODO remember how to do flexbox lol */
-/* .flex > h3 {
-  align-self: start;
-}
-.flex > button {
-  align-self: end;
-} */
-</style>
