@@ -1,15 +1,10 @@
 <script setup>
 import { defineModel } from 'vue'
 
-defineProps({
-  label: {
-    default: '',
-    type: String,
-  },
-  placeholder: {
-    default: '',
-    type: String,
-  },
+const props = defineProps({
+  label: String,
+  id: String,
+  placeholder: String,
   type: {
     default: 'text',
     type: String,
@@ -20,21 +15,19 @@ const model = defineModel()
 </script>
 
 <template>
-  <div>
-    <label :for="label">{{ label }}</label>
+  <div class="mb-2 flex flex-col">
+    <label
+      v-if="props.label"
+      :for="props.label"
+      >{{ props.label }}</label
+    >
     <input
-      :type="type"
-      :name="label"
-      :id="label"
-      :placeholder="placeholder"
+      class="rounded border p-2"
+      :type="props.type"
+      :name="props.label"
+      :id="props.label"
+      :placeholder="props.placeholder"
       v-model="model"
     />
   </div>
 </template>
-
-<style scoped>
-input:focus {
-  border: yellow 8px solid;
-  background-color: var(--primary);
-}
-</style>

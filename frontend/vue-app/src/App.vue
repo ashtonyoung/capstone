@@ -1,15 +1,22 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { ref } from 'vue'
-import NavBar from './components/NavBar.vue'
-
-const sessionExists = ref(false)
 </script>
 
 <template>
-  <header>
-    <NavBar v-if="sessionExists"></NavBar>
-  </header>
+  <header></header>
 
   <RouterView />
 </template>
+
+<style>
+/* CSS debugging */
+/*
+.sm\:flex {
+  outline: 1px solid red;
+}
+
+.sm\:flex > * {
+  outline: 1px solid rebeccapurple !important;
+}
+ */
+</style>
