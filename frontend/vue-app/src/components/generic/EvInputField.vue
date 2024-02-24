@@ -5,6 +5,7 @@ const props = defineProps({
   label: String,
   id: String,
   placeholder: String,
+  autocomplete: String,
   type: {
     default: 'text',
     type: String,
@@ -28,6 +29,7 @@ const model = defineModel()
       :id="props.label"
       :placeholder="props.placeholder"
       v-model="model"
+      :autocomplete="props.autocomplete"
     />
   </div>
 </template>

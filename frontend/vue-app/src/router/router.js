@@ -7,6 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: { public: true },
       component: () => import('@/views/HomeView.vue'),
     },
     {
@@ -30,15 +31,33 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
+      meta: { public: true },
       component: () => import('@/views/AboutView.vue'),
+    },
+    {
+      path: '/:handle',
+      name: 'user-profile',
+      component: () => import('@/views/UserProfileView.vue'),
+    },
+    {
+      path: '/:handle/posts',
+      name: 'posts',
+      component: () => import('@/views/PostIndexView.vue'),
+    },
+    {
+      path: '/:handle/chapters',
+      name: 'chapters',
+      component: () => import('@/views/ChapterIndexView.vue'),
+    },
+    {
+      path: '/:handle/goals',
+      name: 'goals',
+      component: () => import('@/views/GoalIndexView.vue'),
     },
     {
       path: '/logout',
       name: 'logout',
-      beforeEnter: async (to, from, next) => {
-        await logout()
-        next('/login')
-      },
+      component: () => import('@/views/LogoutView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
