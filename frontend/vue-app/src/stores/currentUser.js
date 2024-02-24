@@ -1,8 +1,8 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useStorage } from '@vueuse/core'
 
 export const useCurrentUserStore = defineStore('currentUser', () => {
-  const currentUser = ref(null)
+  const currentUser = useStorage('currentUser', {})
   function setCurrentUser(user) {
     currentUser.value = user
   }
@@ -10,5 +10,9 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
     currentUser.value = null
   }
 
-  return { currentUser, setCurrentUser, clearCurrentUser }
+  function userLoggedIn() {
+    return currentUser.value?.id
+  }
+
+  return { currentUser, setCurrentUser, clearCurrentUser, userLoggedIn }
 })
