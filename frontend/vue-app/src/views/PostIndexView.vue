@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <main>
-    <h1>Home</h1>
-  </main>
+  <h1>Posts</h1>
 </template>
+
+<style scoped></style>

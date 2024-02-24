@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCurrentUserStore } from '@/stores/currentUser.js'
+
+const store = useCurrentUserStore()
 
 const showModal = ref(false)
 function handleShowModal(e) {
@@ -32,6 +35,7 @@ async function handleSignUp() {
     })
     const data = await response.json()
     console.log('response data:', data)
+    await createSession(data)
   } catch (e) {
     console.log('Unexpected server error:', e)
   }
@@ -48,18 +52,24 @@ const logInForm = ref({
     password: '',
   },
 })
-async function handleLogIn(e) {
+
+function handleLogin(e) {
   e.preventDefault()
   e.stopPropagation()
+  createSession(logInForm.value)
+}
+async function createSession(loginData) {
   try {
     const response = await fetch('/api/sessions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(logInForm.value),
+      body: JSON.stringify(loginData),
     })
     if (response.ok) {
+      const data = await response.json()
+      store.setCurrentUser(data.user)
       redirectToHome()
     } else {
       console.log('response data:', await response.json())
@@ -92,7 +102,7 @@ async function handleLogIn(e) {
         <div class="flex flex-col">
           <ev-btn
             class="mb-2"
-            @click="handleLogIn"
+            @click="handleLogin"
           >
             Log In</ev-btn
           >
@@ -115,15 +125,18 @@ async function handleLogIn(e) {
         <ev-input-field
           v-model="signUpForm.user.email"
           label="Email"
+          autocomplete="off"
         />
         <ev-input-field
           v-model="signUpForm.user.handle"
           label="Handle"
+          autocomplete="off"
         />
         <ev-input-field
           v-model="signUpForm.user.password"
           label="Password"
           type="password"
+          autocomplete="new-password"
         />
       </template>
     </ev-modal>

@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <main>
-    <h1>Home</h1>
-  </main>
+  <div>
+    <p>This is a User Page</p>
+  </div>
 </template>

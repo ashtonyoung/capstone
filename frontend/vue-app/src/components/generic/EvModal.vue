@@ -38,27 +38,43 @@ function handleCancel() {
 
 <template>
   <dialog
-    class="rounded p-4 text-base-content sm:w-1/2 lg:w-1/3"
+    class="w-full rounded p-4 text-base-content sm:w-1/2 lg:w-1/3"
     ref="dialog"
   >
-    <form method="dialog">
-      <header class="mb-2 flex content-between text-xl">
-        <slot name="title"></slot>
-      </header>
+    <Transition>
+      <div v-if="show">
+        <form method="dialog">
+          <header class="mb-2 flex content-between text-xl">
+            <slot name="title"></slot>
+          </header>
 
-      <section>
-        <slot name="body"></slot>
-      </section>
-      <slot name="footer">
-        <footer class="flex flex-row justify-end">
-          <ev-btn
-            class="mr-1"
-            @click="handleCancel"
-            >{{ cancelText }}</ev-btn
-          >
-          <ev-btn @click="handleConfirm">{{ confirmText }}</ev-btn>
-        </footer>
-      </slot>
-    </form>
+          <section>
+            <slot name="body"></slot>
+          </section>
+          <slot name="footer">
+            <footer class="flex flex-row justify-end">
+              <ev-btn
+                class="mr-1"
+                @click="handleCancel"
+                >{{ cancelText }}
+              </ev-btn>
+              <ev-btn @click="handleConfirm">{{ confirmText }}</ev-btn>
+            </footer>
+          </slot>
+        </form>
+      </div>
+    </Transition>
   </dialog>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
