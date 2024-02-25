@@ -43,3 +43,11 @@ post2 = Post.create(
   emotion: "negative",
   chapter_id: chapter.id
 )
+
+goal = Goal.create(
+  name: "Finish mixing",
+  description: "Finish mixing the album",
+  target_date: Time.new(2022, 3, 1),
+  status: "in_progress",
+  event_id: event.id
+)
