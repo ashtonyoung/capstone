@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_041602) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_25_043811) do
   create_table "chapters", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_041602) do
     t.datetime "updated_at", null: false
     t.boolean "private", default: true
     t.integer "event_id"
+    t.index ["event_id"], name: "index_chapters_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -31,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_041602) do
     t.datetime "updated_at", null: false
     t.boolean "private", default: true
     t.integer "user_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -41,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_041602) do
     t.integer "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_goals_on_event_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -65,6 +68,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_041602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "private", default: true
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["handle"], name: "index_users_on_handle"
   end
 
   add_foreign_key "chapters", "events"
