@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_15_184947) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_24_212621) do
   create_table "chapters", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.date "expiration_date"
+    t.date "expires_at"
     t.boolean "sealed"
-    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_chapters_on_user_id"
+    t.boolean "private", default: true
+    t.integer "event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -27,11 +27,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_184947) do
     t.date "end_date"
     t.string "name"
     t.string "description"
-    t.integer "goal"
-    t.integer "chapter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chapter_id"], name: "index_events_on_chapter_id"
+    t.boolean "private", default: true
+    t.integer "user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -40,6 +39,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_184947) do
     t.integer "chapter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "private", default: true
+    t.boolean "published", default: true
+    t.datetime "written_at"
+    t.integer "emotion", default: 1
     t.index ["chapter_id"], name: "index_posts_on_chapter_id"
   end
 
@@ -51,9 +54,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_184947) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "private", default: true
   end
 
-  add_foreign_key "chapters", "users"
-  add_foreign_key "events", "chapters"
+  add_foreign_key "chapters", "events"
+  add_foreign_key "events", "users"
   add_foreign_key "posts", "chapters"
 end

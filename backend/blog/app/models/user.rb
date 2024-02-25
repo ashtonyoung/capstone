@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   # CALLBACKS
-  before_save :format_data
+  before_create :format_data
 
   # RELATIONS
-  has_many :chapters, dependent: :destroy
+  has_many :events, dependent: :destroy
 
   # VALIDATIONS
   validates :handle, uniqueness: true, presence: true

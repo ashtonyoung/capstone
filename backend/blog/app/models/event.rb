@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
-  belongs_to :chapter
+  has_many :chapters, dependent: :destroy
+  belongs_to :user
 
   validates :name, presence: true
-  validates :chapter_id, presence: true
-  validates :chapter_id, uniqueness: true
+  validates :user_id, presence: true
 end
