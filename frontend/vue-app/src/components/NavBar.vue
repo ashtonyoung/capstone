@@ -33,8 +33,8 @@ function toggleRightNav() {
       <button @click="toggleLeftNav">
         <Bars3Icon class="h-6" />
       </button>
-      <!--      <h1 class="text-primary-content mx-2 w-full bg-secondary p-2 font-serif">E</h1>-->
-      <h1 class="mx-2">Home > Model > Action</h1>
+      <h1 class="mx-2 rounded bg-base-200 p-2 font-serif text-neutral"><a href="/">Eventful</a></h1>
+      <h1 class="text-neutral-content mx-2 text-sm">Home => Model => Action</h1>
     </section>
     <section class="mx-4">
       <button @click="toggleRightNav">
@@ -64,9 +64,10 @@ function toggleRightNav() {
           <RouterLink to="/editor">New Post</RouterLink>
         </section>
         <section class="flex flex-col py-2">
-          <RouterLink :to="`${currentUser.handle}/chapters`">Chapters</RouterLink>
-          <RouterLink :to="`${currentUser.handle}/posts`">Posts</RouterLink>
-          <RouterLink :to="`${currentUser.handle}/goals`">Goals</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/events`">Events</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/chapters`">Chapters</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/posts`">Posts</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/goals`">Goals</RouterLink>
         </section>
       </div>
     </aside>

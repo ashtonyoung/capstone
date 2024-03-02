@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { checkAuthentication, logout } from '@/router/sessionFunctions.js'
+import { checkAuthentication } from '@/router/sessionFunctions.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +38,12 @@ const router = createRouter({
       path: '/:handle',
       name: 'user-profile',
       component: () => import('@/views/UserProfileView.vue'),
+    },
+    {
+      path: '/:handle/events',
+      name: 'events',
+      meta: { public: true },
+      component: () => import('@/views/EventIndexView.vue'),
     },
     {
       path: '/:handle/posts',

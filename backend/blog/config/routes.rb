@@ -6,4 +6,10 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sessions, only: %i[create destroy index]
+
+  scope ":handle" do
+    resources :events do
+      resources :chapters
+    end
+  end
 end
