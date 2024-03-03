@@ -46,14 +46,14 @@ const router = createRouter({
       component: () => import('@/views/EventIndexView.vue'),
     },
     {
+      path: '/:handle/events/:event_id/chapters',
+      name: 'chapters',
+      component: () => import('@/views/ChapterIndexView.vue'),
+    },
+    {
       path: '/:handle/posts',
       name: 'posts',
       component: () => import('@/views/PostIndexView.vue'),
-    },
-    {
-      path: '/:handle/chapters',
-      name: 'chapters',
-      component: () => import('@/views/ChapterIndexView.vue'),
     },
     {
       path: '/:handle/goals',
