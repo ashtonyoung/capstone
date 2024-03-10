@@ -1,70 +1,53 @@
 <script setup>
-import { useFetch } from '@vueuse/core'
-import { ref, computed, defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, computed } from 'vue'
+import { InboxIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
-  modelSingular: String,
-  modelPlural: String,
-  itemBaseUrl: String,
+  title: String,
+  primaryButtonText: String,
+  loading: Boolean,
+  editable: Boolean,
+  items: {
+    type: Array,
+    default: () => [],
+  },
 })
 
-const emit = defineEmits(['modalConfirm'])
+const dataNotEmpty = computed(() => props.items?.length)
 
-const { isFetching, error, data } = useFetch(`/api/${props.itemBaseUrl}`).get().json()
-
-const editable = computed(() => data?.value?.metadata?.for_current_user)
-
-// Modal
-const showModal = ref(false)
-function handleShowModal(e) {
-  e.preventDefault()
-  e.stopPropagation()
-  showModal.value = true
-}
-function handleClose() {
-  showModal.value = false
-}
-function handleConfirm() {
-  emit('modalConfirm')
+const emit = defineEmits(['primaryAction'])
+function handlePrimaryButton() {
+  emit('primaryAction')
 }
 </script>
 
 <template>
   <div>
     <header class="my-2 flex items-center justify-between">
-      <div class="text-xl capitalize">{{ props.modelPlural }}</div>
+      <div class="flex flex-col">
+        <div class="font-serif text-2xl capitalize">{{ props.title }}</div>
+      </div>
       <ev-btn
-        v-if="editable"
-        @click="handleShowModal"
-        >New {{ props.modelSingular }}</ev-btn
+        v-if="props.editable"
+        @click="handlePrimaryButton"
       >
+        {{ props.primaryButtonText }}
+      </ev-btn>
     </header>
     <main class="h-svh w-full">
-      <div v-if="data">
-        <div v-if="data[props.modelPlural]?.length">
-          <div
-            v-for="record of data[props.modelPlural]"
-            v-bind:key="record.id"
-            class="flex w-full rounded bg-base-100 p-2 shadow"
-          >
-            <!-- SLOT-->
-            <a :href="`/${props.itemBaseUrl}/${record.id}`">
-              <p class="font-serif text-xl">{{ record.name }}</p>
-              <p class="text-neutral-content text-xs">{{ record.start_date }}</p>
-            </a>
-          </div>
+      <div v-if="props.loading">Fetching data...</div>
+      <div v-else>
+        <div v-if="dataNotEmpty">
+          <slot name="items"></slot>
         </div>
-        <div v-else>No {{ props.modelPlural }} created yet</div>
+        <div
+          v-else
+          class="flex flex-col items-center rounded bg-base-300 p-12"
+        >
+          <p class="text-xl font-bold">No items found</p>
+          <InboxIcon class="h-12" />
+        </div>
       </div>
-      <div v-else-if="isFetching">Fetching data...</div>
-      <div v-else>An unexpected error occurred: {{ error }}</div>
     </main>
   </div>
-  <ev-modal
-    v-if="editable"
-    v-model:show="showModal"
-    @close="handleClose"
-    @confirm="handleConfirm"
-  >
-  </ev-modal>
 </template>
