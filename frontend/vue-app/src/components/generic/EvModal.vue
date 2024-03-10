@@ -2,7 +2,7 @@
 import { defineModel, defineProps, defineEmits, ref, watch } from 'vue'
 import EvBtn from '@/components/generic/EvBtn.vue'
 const emit = defineEmits(['confirm', 'close'])
-defineProps({
+const props = defineProps({
   confirmText: {
     type: String,
     default: 'Confirm',
@@ -13,6 +13,7 @@ defineProps({
     default: 'Cancel',
     required: false,
   },
+  loading: Boolean,
 })
 const show = defineModel('show', { required: true })
 const dialog = ref(null)
@@ -56,9 +57,14 @@ function handleCancel() {
               <ev-btn
                 class="mr-1"
                 @click="handleCancel"
-                >{{ cancelText }}
+                :loading="props.loading"
+                >{{ props.cancelText }}
               </ev-btn>
-              <ev-btn @click="handleConfirm">{{ confirmText }}</ev-btn>
+              <ev-btn
+                :loading="props.loading"
+                @click="handleConfirm"
+                >{{ props.confirmText }}</ev-btn
+              >
             </footer>
           </slot>
         </form>

@@ -1,12 +1,19 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import { useCurrentUserStore } from '@/stores/currentUser.js'
 import { storeToRefs } from 'pinia'
 import { Bars3Icon, UserCircleIcon } from '@heroicons/vue/24/solid'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const store = useCurrentUserStore()
 const { currentUser } = storeToRefs(store)
+
+const route = useRoute()
+
+const breadcrumbs = computed(() => {
+  const user = route.params.handle
+  const first = route.path.match(/\/\w+\/\w+/gm)
+})
 
 const showLeftNav = ref(false)
 const showRightNav = ref(false)
@@ -27,14 +34,15 @@ function toggleRightNav() {
 <template>
   <nav
     v-if="store.userLoggedIn()"
-    class="flex h-16 items-center justify-between bg-base-100 font-bold"
+    class="flex h-12 items-center justify-between bg-base-100 font-bold"
   >
     <section class="mx-4 flex items-center">
       <button @click="toggleLeftNav">
         <Bars3Icon class="h-6" />
       </button>
-      <!--      <h1 class="text-primary-content mx-2 w-full bg-secondary p-2 font-serif">E</h1>-->
-      <h1 class="mx-2">Home > Model > Action</h1>
+      <h1 class="mx-2 text-sm">
+        <RouterLink :to="`/${route.params.handle}`">{{ route.params.handle }}</RouterLink>
+      </h1>
     </section>
     <section class="mx-4">
       <button @click="toggleRightNav">
@@ -46,9 +54,9 @@ function toggleRightNav() {
     v-else
     class="z-40 flex h-16 items-center justify-between bg-base-100 font-bold"
   >
-    <section class="mx-4">
-      <RouterLink to="/about">Eventful</RouterLink>
-    </section>
+    <h1 class="mx-2 rounded p-2 font-serif text-xl text-neutral">
+      <RouterLink to="/">Eventful</RouterLink>
+    </h1>
     <section class="mx-4">
       <RouterLink to="/login">Sign in</RouterLink>
     </section>
@@ -64,9 +72,10 @@ function toggleRightNav() {
           <RouterLink to="/editor">New Post</RouterLink>
         </section>
         <section class="flex flex-col py-2">
-          <RouterLink :to="`${currentUser.handle}/chapters`">Chapters</RouterLink>
-          <RouterLink :to="`${currentUser.handle}/posts`">Posts</RouterLink>
-          <RouterLink :to="`${currentUser.handle}/goals`">Goals</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/events`">Events</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/chapters`">Chapters</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/posts`">Posts</RouterLink>
+          <RouterLink :to="`/${currentUser.handle}/goals`">Goals</RouterLink>
         </section>
       </div>
     </aside>

@@ -13,6 +13,10 @@ class ApplicationController < ActionController::API
     @_current_user ||= session[:current_user_id] && User.find_by(id: session[:current_user_id])
   end
 
+  def for_current_user(**kwargs)
+    kwargs[:user_id] == current_user.id
+  end
+
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
     current_user.present?
