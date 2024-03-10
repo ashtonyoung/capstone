@@ -6,7 +6,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   # For my future reference, this is for an individual record
   def as_json(*, **kwargs)
-    attributes.reject { |key, value| key.match?(/_digest/) || value.nil? } unless kwargs[:include_nil_values]
+    attributes.reject { |_, value| value.nil? } unless kwargs[:include_nil_values]
+    attributes.reject { |key, _| key.match?(/_digest/) }
     attributes
   end
 end
