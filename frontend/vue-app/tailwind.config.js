@@ -12,7 +12,7 @@ export default {
         // DAISY UI - Winter theme
         'color-scheme': 'light',
         primary: '#0070ed',
-        'primary-content': '#d2e4ff',
+        'primary-content': '#EAF2FFFF',
         secondary: '#463AA2',
         'secondary-content': '#d5d7ef',
         accent: '#C148AC',
@@ -27,6 +27,7 @@ export default {
         success: '#81CFD1',
         warning: '#EFD7BB',
         error: '#E58B8B',
+        'error-content': '#2f1d1d', // I made this color
       },
     },
   },
